@@ -51,6 +51,22 @@ class BrdParser(Parser):
     def statement(self, p):
         pass
 
+    @_('BOARD "(" expr "," expr ")"')
+    def statement(self,p):
+        return ('board_object', p.expr0, p.expr1)
+
+    # @_('PLAYER "(" expr "," expr ")"')
+    # def statement(self,p):
+    #     return ('board_object', p.expr0, p.expr1)
+
+    @_('DICE "(" ")"')
+    def statement(self,p):
+        return ('dice_object')
+
+    @_('TIMER "(" expr "," expr "," expr ")"')
+    def statement(self,p):
+        return ('board_object', p.expr0, p.expr1, p.expr2)
+
     @_('FOR var_assign TO expr THEN statement')
     def statement(self, p):
         return ('for_loop', ('for_loop_setup', p.var_assign, p.expr), p.statement)
