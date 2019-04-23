@@ -1,5 +1,4 @@
 # Base code is from HowCode, a basic interpreter
-#
 from sly import Lexer
 from sly import Parser
 import Board
