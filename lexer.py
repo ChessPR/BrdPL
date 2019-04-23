@@ -1,4 +1,4 @@
-# Base code is from howcode, a basic interpreter
+# Base code is from HowCode, a basic interpreter
 
 from sly import Lexer
 from sly import Parser
