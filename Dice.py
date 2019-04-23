@@ -15,5 +15,5 @@ class Dice(object):
 
 
 # For testing purposes
-dice = Dice(1, 6)
-dice.roll()
+# dice = Dice(1, 6)
+# dice.roll()

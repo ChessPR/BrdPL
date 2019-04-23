@@ -35,13 +35,12 @@ class Board(object):
                 thecanvas.create_rectangle(col*w, row*h, (col+1)*w, (row+1)*h, fill=fillcolor)
         window.mainloop()
 
-board = Board(8, 8)
-b = board.createChessBoard("white", "black")
+# board = Board(8, 8)
+#b = board.createChessBoard("white", "black")
 # print(b)
 # print(b[0, 1])
 # print(b[0, 2])
 # board.display(b, 750, 750, "#F8F8FF", "#A0522D")
-print(b[0])
-print(b[1])
-board.display(b[0], 750, 750, b[1])
-
+# print(b[0])
+# print(b[1])
+# board.display(b[0], 750, 750, b[1])
