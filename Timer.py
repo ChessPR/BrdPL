@@ -4,12 +4,15 @@ import time
 class Timer(object):
 
     def __init__(self, hours, minutes, seconds):
-        self.hours = hours
-        self.minutes = minutes
-        self.seconds = seconds
+        if isinstance(hours and minutes and seconds, int):
+            self.hours = hours
+            self.minutes = minutes
+            self.seconds = seconds
+            self.timeRemaining = 0
+        else:
+            raise TypeError("Arguments must be integers ")
 
     def countDown(self):
-        count = 0
         while self.hours or self.minutes or self.seconds != 0:
             if self.hours - 9 < 1:
                 hours = "0" + str(self.hours)
@@ -25,6 +28,7 @@ class Timer(object):
                 seconds = str(self.seconds)
             time_remaining = hours + ":" + minutes + ":" + seconds
             print(time_remaining)
+            self.timeRemaining = time_remaining
             if self.seconds == 0 and (self.minutes != 0 or self.hours != 0):
                 self.seconds = 59
                 count = 0
@@ -38,5 +42,7 @@ class Timer(object):
             time.sleep(1)
         print("Times up!")
 
-timer = Timer(0, 0, 3)
-timer.countDown()
+
+# # For testing purposes
+# timer = Timer(0, 0, 3)
+# timer.countDown()
