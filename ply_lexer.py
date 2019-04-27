@@ -6,17 +6,17 @@ import sys
 # Create a list to hold all of the token names
 
 reserved = {
-    'if' : 'IF',
-    'then' : 'THEN',
-    'else' : 'ELSE',
-    'while' : 'WHILE',
-    'board' : 'BOARD',
-    'player' : 'PLAYER',
-    'timer' : 'TIMER',
-    'dice' : 'DICE',
-    'piece' : 'PIECE',
-    'print' : 'PRINT',
-    'for' : 'FOR',
+    # 'if' : 'IF',
+    # 'then' : 'THEN',
+    # 'else' : 'ELSE',
+    # 'while' : 'WHILE',
+    # 'board' : 'BOARD',
+    # 'player' : 'PLAYER',
+    # 'timer' : 'TIMER',
+    # 'dice' : 'DICE',
+    # 'piece' : 'PIECE',
+    # 'print' : 'PRINT',
+    # 'for' : 'FOR',
     'True' : 'TRUE',
     'False' : 'FALSE',
     'and' : 'AND',
@@ -35,16 +35,16 @@ tokens = [
     'DIVIDE',
     'MULTIPLY',
     'EQUALS',
-    'LPAREN',
-    'RPAREN',
-    'LBRACKET',
-    'RBRACKET',
-    'LSBRACKET',
-    'RSBRACKET',
-    'LTHAN',
-    'GTHAN',
-    'LTHANOREQUALS',
-    'GTHANOREQUALS',
+    # 'LPAREN',
+    # 'RPAREN',
+    # 'LBRACKET',
+    # 'RBRACKET',
+    # 'LSBRACKET',
+    # 'RSBRACKET',
+    'LESSTHAN',
+    'GREATERTHAN',
+    'LESSTHANOREQUALS',
+    'GREATERTHANOREQUALS',
     'ISEQUALS',
 
     ] + list(reserved.values())
@@ -57,16 +57,16 @@ t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_ISEQUALS = r'\=\='
 t_EQUALS = r'\='
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_LBRACKET = r'\{'
-t_RBRACKET = r'\}'
-t_LSBRACKET = r'\['
-t_RSBRACKET = r'\]'
-t_LTHAN = r'<'
-t_GTHAN = r'>'
-t_LTHANOREQUALS = r'\<\='
-t_GTHANOREQUALS = r'\>\='
+# t_LPAREN = r'\('
+# t_RPAREN = r'\)'
+# t_LBRACKET = r'\{'
+# t_RBRACKET = r'\}'
+# t_LSBRACKET = r'\['
+# t_RSBRACKET = r'\]'
+t_LESSTHAN = r'<'
+t_GREATERTHAN = r'>'
+t_LESSTHANOREQUALS = r'\<\='
+t_GREATERTHANOREQUALS = r'\>\='
 
 
 # Ply's special t_ignore variable allows us to define characters the lexer will ignore.
@@ -76,13 +76,7 @@ t_ignore = r' '
 # More complicated tokens, such as tokens that are more than 1 character in length
 # are defined using functions.
 # A float is 1 or more numbers followed by a dot (.) followed by 1 or more numbers again.
-# def t_BOOL(t):
-#     r'(True|False)'
-#     if str(t.value) == 'True':
-#         t.value = True
-#     elif str(t.value) == 'False':
-#         t.value = False
-#     return t
+
 
 def t_FLOAT(t):
     r'\d+\.\d+'
@@ -137,12 +131,17 @@ def p_calc(p):
     calc : expression
          | var_assign
          | empty
+         | bool_statement
+         | bool_and_or
     '''
     print(run(p[1]))
 
 def p_var_assign(p):
     '''
     var_assign : NAME EQUALS expression
+               | NAME EQUALS bool_statement
+               | NAME EQUALS STRING
+               | NAME EQUALS bool_and_or
     '''
     # Build our tree
     p[0] = ('=', p[1], p[3])
@@ -154,6 +153,11 @@ def p_expression(p):
                | expression DIVIDE expression
                | expression PLUS expression
                | expression MINUS expression
+               | expression ISEQUALS expression
+               | expression GREATERTHAN expression
+               | expression GREATERTHANOREQUALS expression
+               | expression LESSTHAN expression
+               | expression LESSTHANOREQUALS expression
     '''
     # Build our tree.
     p[0] = (p[2], p[1], p[3])
@@ -164,6 +168,33 @@ def p_expression_int_float(p):
                | FLOAT
     '''
     p[0] = p[1]
+
+def p_bool_statement(p):
+    '''
+    bool_statement : TRUE
+                   | FALSE
+    '''
+    # if p[1] == 'True':
+    #     p[0] = True
+    # elif p[1] == 'False':
+    #     p[0] = False
+    p[0] = p[1]
+
+
+def p_bool_and_or_operations(p):
+    '''
+    bool_and_or : bool_statement
+                | bool_statement AND bool_statement
+                | bool_statement OR bool_statement
+    '''
+    if len(p) == 2:
+        p[0] = p[1]
+    # elif p[2] == 'And':
+    #     p[0] = p[1] and p[3]
+    # elif p[2] == 'Or':
+    #     p[0] = p[1] or p[3]
+    elif p[2] == 'and' or p[2] == 'or':
+        p[0] = (p[2], p[1], p[3])
 
 def p_expression_var(p):
     '''
@@ -176,7 +207,7 @@ def p_expression_var(p):
 # Output to the user that there is an error in the input as it doesn't conform to our grammar.
 # p_error is another special Ply function.
 def p_error(p):
-    print("Syntax error found!")
+    print("Syntax error found!") # Standard error message
 
 def p_empty(p):
     '''
@@ -203,6 +234,22 @@ def run(p):
         elif p[0] == '=':
             env[p[1]] = run(p[2])
             return ''
+        elif p[0] == '==':
+            return run(p[1]) == run(p[2])
+        elif p[0] == '<':
+            return run(p[1]) < run(p[2])
+        elif p[0] == '>':
+            return run(p[1]) > run(p[2])
+        elif p[0] == '<=':
+            return run(p[1]) <= run(p[2])
+        elif p[0] == '>=':
+            return run(p[1]) >= run(p[2])
+        elif not p[0] and True:
+            return False
+        elif p[0] and True:
+            return True
+        elif p[0] == 'and':
+            return run(p[1]) and run(p[2])
         elif p[0] == 'var':
             if p[1] not in env:
                 return 'Undeclared variable found!'
@@ -211,7 +258,6 @@ def run(p):
     else:
         return p
 
-# Create a REPL to provide a way to interface with our calculator.
 while True:
     try:
         s = input('>> ')
