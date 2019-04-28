@@ -34,9 +34,10 @@ tokens = [
     'MINUS',
     'DIVIDE',
     'MULTIPLY',
+    'COMA',
     'EQUALS',
-    # 'LPAREN',
-    # 'RPAREN',
+    'LPAREN',
+    'RPAREN',
     # 'LBRACKET',
     # 'RBRACKET',
     # 'LSBRACKET',
@@ -57,8 +58,9 @@ t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_ISEQUALS = r'\=\='
 t_EQUALS = r'\='
-# t_LPAREN = r'\('
-# t_RPAREN = r'\)'
+t_COMA = ','
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
 # t_LBRACKET = r'\{'
 # t_RBRACKET = r'\}'
 # t_LSBRACKET = r'\['
@@ -92,13 +94,14 @@ def t_INT(t):
         print('Line %d: Error with value %s' % (t.lineno, t.value))
     return t
 
-def t_STRING(t):
+def t_STRING(t): # have to use ""
     r'\".*?\"'
     try:
         t.value = str(t.value)
     except ValueError:
         print('Line %d: Error with value %s' % (t.lineno, t.value))
     return t
+
 # A NAME is a variable name. A variable can be 1 or more characters in length.
 # The first character must be in the ranges a-z A-Z or be an underscore.
 # Any character following the first character can be a-z A-Z 0-9 or an underscore.
@@ -131,17 +134,16 @@ def p_calc(p):
     calc : expression
          | var_assign
          | empty
-         | bool_statement
-         | bool_and_or
+         | string_statement
+         | tuple_expression
     '''
     print(run(p[1]))
 
 def p_var_assign(p):
     '''
     var_assign : NAME EQUALS expression
-               | NAME EQUALS bool_statement
-               | NAME EQUALS STRING
-               | NAME EQUALS bool_and_or
+               | NAME EQUALS string_statement
+               | tuple_expression
     '''
     # Build our tree
     p[0] = ('=', p[1], p[3])
@@ -158,6 +160,8 @@ def p_expression(p):
                | expression GREATERTHANOREQUALS expression
                | expression LESSTHAN expression
                | expression LESSTHANOREQUALS expression
+               | expression AND expression
+               | expression OR expression
     '''
     # Build our tree.
     p[0] = (p[2], p[1], p[3])
@@ -169,32 +173,55 @@ def p_expression_int_float(p):
     '''
     p[0] = p[1]
 
-def p_bool_statement(p):
+def p_expression_str(p):
     '''
-    bool_statement : TRUE
-                   | FALSE
+    string_statement : STRING
     '''
-    # if p[1] == 'True':
-    #     p[0] = True
-    # elif p[1] == 'False':
-    #     p[0] = False
+    if len(p) == 1:
+        p[0] = None
+    else:
+        p[0] = p[1]
+
+# def p_bool_statement(p):
+#     '''
+#     bool_statement : TRUE
+#                    | FALSE
+#     '''
+#     if p[1] == 'TRUE':
+#         p[0] = True
+#     elif p[1] == 'FALSE':
+#         p[0] = False
+    #p[0] = p[1]
+def p_bool_stament(p):
+    '''
+    expression : TRUE
+               | FALSE
+    '''
+    # if p[1] == True:
+    #     p[0] = p[1]
+    # elif p[1] == False:
+    #     p[0] = p[1]
     p[0] = p[1]
 
-
-def p_bool_and_or_operations(p):
-    '''
-    bool_and_or : bool_statement
-                | bool_statement AND bool_statement
-                | bool_statement OR bool_statement
-    '''
-    if len(p) == 2:
-        p[0] = p[1]
-    # elif p[2] == 'And':
-    #     p[0] = p[1] and p[3]
-    # elif p[2] == 'Or':
-    #     p[0] = p[1] or p[3]
-    elif p[2] == 'and' or p[2] == 'or':
-        p[0] = (p[2], p[1], p[3])
+# def p_bool_and_or_operations(p):
+#     '''
+#     bool_and_or : bool_statement
+#                 | bool_statement AND bool_statement
+#                 | bool_statement OR bool_statement
+#     '''
+#     # bool_and_or: bool_statement
+#     # | bool_statement
+#     # AND
+#     # bool_statement
+#
+#     if len(p) == 2:
+#         p[0] = p[1]
+#     elif p[2] == 'and':
+#         p[0] = p[1] and p[3]
+#     elif p[2] == 'or':
+#         p[0] = p[1] or p[3]
+#     # elif p[2] == 'and' or p[2] == 'or':
+    #     p[0] = (p[2], p[1], p[3])
 
 def p_expression_var(p):
     '''
@@ -214,6 +241,41 @@ def p_empty(p):
     empty :
     '''
     p[0] = None
+
+#def p_function_call
+# def p_expression_tuple(p):
+#     '''
+#     expression : tuple_expression
+#     '''
+#     p[0] = p[1]
+#
+# def p_tuple_expression(p):
+#     '''
+#     tuple_expression : LPAREN tuple_content RPAREN
+#                      | LPAREN tuple_expression RPAREN COMA tuple_expression
+#     '''
+#     p[0] = p[2]
+#
+# def p_tuple_content(p):
+#     '''
+#     tuple_content : tuple_content COMA tuple_item
+#                   | tuple_item
+#     '''
+#     if len(p) == 2:
+#         p[0] = (p[1],)
+#     else:
+#         p[0] = p[1] + (p[3],)
+#
+# def p_tuple_item(t):
+#     '''
+#     tuple_item : expression
+#                | string_statement
+#     '''
+#     if len(t) == 1:
+#         t[0] = ()
+#     elif len(t) == 2:
+#         t[0] = t[1]
+
 
 # Build the parser
 parser = yacc.yacc()
@@ -244,12 +306,14 @@ def run(p):
             return run(p[1]) <= run(p[2])
         elif p[0] == '>=':
             return run(p[1]) >= run(p[2])
-        elif not p[0] and True:
-            return False
         elif p[0] and True:
             return True
+        elif p[0] == False:
+            return False
         elif p[0] == 'and':
             return run(p[1]) and run(p[2])
+        elif p[0] == 'or':
+            return run(p[1]) or run(p[2])
         elif p[0] == 'var':
             if p[1] not in env:
                 return 'Undeclared variable found!'
