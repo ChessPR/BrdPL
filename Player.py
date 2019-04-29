@@ -31,5 +31,6 @@ class Player(object):
             self.name = name
         else:
             raise TypeError("Name must be a string")
+
     def print(self):
         print("Name: " + self.name + " Turn: " + str(self.turn) + " Score: " + str(self.score))

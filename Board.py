@@ -1,6 +1,5 @@
 import numpy as np
 from tkinter import *
-from Piece import *
 
 
 class Board(object):
@@ -30,7 +29,8 @@ class Board(object):
         else:
             raise TypeError("Colors must be strings")
 
-    def display(self,  arr, width, height, color_Arr, ArrPieces):
+    def display(self,  arr, width, height, color_Arr):
+        # labelArr = []
         if isinstance(color_Arr, list) and isinstance(width and height, int) and isinstance(arr, np.ndarray):
             window = Tk()
             thecanvas = Canvas(window, width=width, height=height)
@@ -43,27 +43,25 @@ class Board(object):
                     fillcolor = color_Arr[int(arr[row, col])]
                     thecanvas.create_rectangle(col*w, row*h, (col+1)*w, (row+1)*h, fill=fillcolor)
             # for pieces in ArrPieces:
-            #     pieces
-            #     thecanvas.create_image()
+            #     img = Image.open(pieces.image).resize((pieces.x, pieces.y), Image.ANTIALIAS)
+            #     picture = ImageTk.PhotoImage(img)
+            #     pic = Label(thecanvas, image=picture)
+            #     pic.place(x=pieces.location[0], y=pieces.location[1])
+            #     labelArr.append(pic)
             window.mainloop()
         else:
             raise TypeError("One or more arguments have the wrong type")
 
 
-# For testing purposes
-board = Board(8, 8)
-b = board.createChessBoard("white", "black")
-print(type(b))
-# print(b[0, 1])
-# print(b[0, 2])
-# board.display(b, 750, 750, "#F8F8FF", "#A0522D")
-print(type(b[0]))
-print(type(b[1]))
-if isinstance(b[0], np.ndarray):
-    print("Its ok")
-img = "chessKing.png"
-piece = Piece(20, 20, img, "King")
-piece.make()
-pieces = [piece]
-print(pieces[0])
-board.display(b[0], 750, 750, b[1], pieces)
+# # For testing purposes
+# board = Board(8, 8)
+# b = board.createChessBoard("white", "black")
+# print(type(b))
+# # print(b[0, 1])
+# # print(b[0, 2])
+# # board.display(b, 750, 750, "#F8F8FF", "#A0522D")
+# print(type(b[0]))
+# print(type(b[1]))
+# if isinstance(b[0], np.ndarray):
+#     print("Its ok")
+# board.display(b[0], 800, 800, b[1])
