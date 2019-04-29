@@ -53,9 +53,10 @@ class Board(object):
             raise TypeError("One or more arguments have the wrong type")
 
 
-# # For testing purposes
+# For testing purposes
 # board = Board(8, 8)
 # b = board.createChessBoard("white", "black")
+# print(type(board))
 # print(type(b))
 # # print(b[0, 1])
 # # print(b[0, 2])
