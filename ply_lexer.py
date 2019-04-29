@@ -1,8 +1,10 @@
 # this is a try in ply
 import ply.lex as lex
 import ply.yacc as yacc
-import sys
-
+import Board
+import Dice
+import Player
+import Timer
 # Create a list to hold all of the token names
 
 reserved = {
@@ -11,11 +13,11 @@ reserved = {
     # 'else' : 'ELSE',
     # 'while' : 'WHILE',
     # 'board' : 'BOARD',
-    # 'player' : 'PLAYER',
-    # 'timer' : 'TIMER',
-    # 'dice' : 'DICE',
-    # 'piece' : 'PIECE',
-    # 'print' : 'PRINT',
+    'player' : 'PLAYER',
+    'timer' : 'TIMER',
+    'dice' : 'DICE',
+    'piece' : 'PIECE',
+    'print' : 'PRINT',
     # 'for' : 'FOR',
     'True' : 'TRUE',
     'False' : 'FALSE',
@@ -229,7 +231,35 @@ def p_expression_var(p):
     '''
     p[0] = ('var', p[1])
 
-# def p_
+def p_timer_expression(p):
+    '''
+    expression : LPAREN expression COMMA expression COMMA expression RPAREN
+    '''
+    p[0] = ('timer', p[1], p[2], p[3])
+
+def p_board_expression(p):
+    '''
+    expression : BOARD LPAREN expression COMMA expression RPAREN
+    '''
+    p[0] = ('board', p[1], p[2])
+
+def p_dice_expression(p):
+    '''
+    expression : DICE LPAREN expression COMMA expression RPAREN
+    '''
+    p[0] = ('dice', p[1], p[2])
+
+def p_player_expression(p):
+    '''
+    expression : PLAYER LPAREN expression COMMA expression RPAREN
+    '''
+    p[0] = ('player', p[2], p[3], p[4])
+
+def p_print(p):
+    '''
+    print : PRINT LPAREN expression RPAREN
+    '''
+    p[0] = ('print', p[1])
 
 # Output to the user that there is an error in the input as it doesn't conform to our grammar.
 # p_error is another special Ply function.
@@ -314,6 +344,16 @@ def run(p):
             return run(p[1]) and run(p[2])
         elif p[0] == 'or':
             return run(p[1]) or run(p[2])
+        elif p[0] == 'board':
+            return Board(p[1], p[2])
+        elif p[0] == 'timer':
+            return Timer(p[1], p[2], p[3])
+        elif p[0] == 'player':
+            return Player(p[1], p[2], p[3])
+        elif p[0] == 'dice':
+            return Dice(p[1], p[2])
+        elif p[0] == 'print':
+            print(str(p[1]))
         elif p[0] == 'var':
             if p[1] not in env:
                 return 'Undeclared variable found!'
