@@ -16,6 +16,7 @@ reserved = {
     'and' : 'AND',
     'or' : 'OR',
     'CountDown' : 'FUNCTION',
+    'Display' : 'DISPLAY',
 }
 
 tokens = [
@@ -31,6 +32,7 @@ tokens = [
           'EQUALS',
           'COMMA',
           'SEMI',
+          'POINT',
           'LPAREN',
           'RPAREN',
           'LBRACKET',
@@ -44,14 +46,6 @@ tokens = [
           'ISEQUALS',
           ] + list(reserved.values())
 
-# reserved = {
-#     'Player':'TYPENAME',
-#     'True' : 'BOOL',
-#     'False' : 'BOOL',
-#     'and' : 'AND',
-#     'or' : 'OR',
-# }
-
 t_ignore = r' '
 t_PLUS = r'\+'
 t_MINUS = r'\-'
@@ -60,6 +54,7 @@ t_DIVIDE = r'\/'
 t_EQUALS = r'\='
 t_COMMA = ','
 t_SEMI = ';'
+t_POINT = '.'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACKET = r'\{'
@@ -94,6 +89,7 @@ def t_ID(t):
         else:
             t.value = False
     return t
+
 def t_STRING(t): # have to use ""
     r'\".*?\"'
     try:
@@ -109,6 +105,8 @@ def t_error(t):
 
 lexer = lex.lex()
 
+
+# Grammar of the code
 def p_main(p):
     '''
     main : prim
@@ -118,6 +116,7 @@ def p_main(p):
          | listprim
          | var_assign
          | var
+         | display
     '''
     print(run(p[1]))
 
@@ -130,13 +129,6 @@ def p_primitive(p):
          | STRING
     '''
     p[0] = p[1]
-
-# def p_arg(p):
-#     '''
-#     args : LPAREN listprim RPAREN
-#          | LPAREN empty RPAREN
-#     '''
-#     p[0] = p[2]
 
 def p_list_attr(p):
     '''
@@ -179,28 +171,38 @@ def p_typedeclar(p):
     else:
         p[0] = None
 
+def p_fun_call(p):
+    '''
+    expression : FUNCTION LPAREN empty RPAREN SEMI
+               | var POINT FUNCTION LPAREN listprim RPAREN SEMI
+    '''
+    print('hi')
+
+
+def p_forced_display(p):
+    '''
+    display : DISPLAY
+    '''
+    board = Board.Board(8, 8)
+    b = board.createChessBoard("white", "black")
+    board.display(b[0], 800, 800, b[1])
+    p[0] = "Running"
+
+# Varable declaration requires semi-colon at the end.
 def p_var_assign(p):
     '''
-    var_assign : ID EQUALS expression
-               | ID EQUALS prim
-               | ID EQUALS typedeclar
+    var_assign : ID EQUALS expression SEMI
+               | ID EQUALS prim SEMI
+               | ID EQUALS typedeclar SEMI
     '''
     # Build our tree
     p[0] = ('=', p[1], p[3])
 
 def p_expression_var(p):
     '''
-    var : ID SEMI
+    var : ID
     '''
-    global env
-    if p[1] not in env:
-        print('Undeclared variable found!')
-    else:
-        p[0] = env[p[1]]
-    #p[0] = ('var', p[1])
-
-# def fun_call(p):
-
+    p[0] = ('var', p[1])
 
 def p_error(p):
     print("Syntax error found!")
@@ -211,6 +213,7 @@ def p_empty(p):
     '''
     p[0] = None
 
+# Helper method for the creation of objects,
 def create_object(typename, arg1, arg2, arg3, arg4, arg5):
     if typename == 'Board':
         print('Board Created')
@@ -231,13 +234,12 @@ def create_object(typename, arg1, arg2, arg3, arg4, arg5):
         print('else')
         return None
 
-
-
-
 env = {}
 
 def run(p):
     global env
+    if p in env: # Fixes problem with the variable declaration
+        return env[p]
     if type(p) == tuple:
         if p[0] == '+':
             return run(p[1]) + run(p[2])
@@ -266,7 +268,7 @@ parser = yacc.yacc()
 
 while True:
     try:
-        s = input('')
+        s = input('>>>')
     except EOFError:
         break
     parser.parse(s)

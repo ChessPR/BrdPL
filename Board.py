@@ -58,9 +58,9 @@ class Board(object):
 # b = board.createChessBoard("white", "black")
 # print(type(board))
 # print(type(b))
-# # print(b[0, 1])
-# # print(b[0, 2])
-# # board.display(b, 750, 750, "#F8F8FF", "#A0522D")
+# print(b[0, 1])
+# print(b[0, 2])
+# board.display(b, 750, 750, "#F8F8FF", "#A0522D")
 # print(type(b[0]))
 # print(type(b[1]))
 # if isinstance(b[0], np.ndarray):
