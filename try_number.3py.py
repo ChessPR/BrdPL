@@ -1,7 +1,10 @@
 import ply.lex as lex
 import ply.yacc as yacc
 import Board
-
+import Dice
+import Player
+import Timer
+import Piece
 reserved = {
     'Player':'TYPENAME',
     'Board' : 'TYPENAME',
@@ -17,6 +20,7 @@ reserved = {
 tokens = [
           'INT',
           'FLOAT',
+          'STRING',
           'WHITESPACE',
           'ID',
           'PLUS',
@@ -25,6 +29,7 @@ tokens = [
           'MULTIPLY',
           'EQUALS',
           'COMMA',
+          'SEMI',
           'LPAREN',
           'RPAREN',
           'LBRACKET',
@@ -53,6 +58,7 @@ t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_EQUALS = r'\='
 t_COMMA = ','
+t_SEMI = ';'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACKET = r'\{'
@@ -87,6 +93,14 @@ def t_ID(t):
         else:
             t.value = False
     return t
+def t_STRING(t): # have to use ""
+    r'\".*?\"'
+    try:
+        t.value = str(t.value)
+    except ValueError:
+        print('Line %d: Error with value %s' % (t.lineno, t.value))
+    return t
+
 
 def t_error(t):
     print("Illegal characters!")
@@ -110,6 +124,7 @@ def p_primitive(p):
          | FLOAT
          | INT
          | ID
+         | STRING
     '''
     p[0] = p[1]
 
@@ -148,10 +163,18 @@ def p_expression_prim(p):
 
 def p_typedeclar(p):
     '''
-    typedeclar : TYPENAME
+    typedeclar : TYPENAME LPAREN empty RPAREN SEMI
+               | TYPENAME LPAREN listprim RPAREN SEMI
     '''
     print('typedeclar')
-    p[0] = create_object(p[1],8,8,0,0,0)
+    if len(p[3]) == 2:
+        p[0] = create_object(p[1],(p[3])[0],(p[3])[1],0,0,0)
+    elif len(p[3]) == 3:
+        p[0] = create_object(p[1],(p[3])[0],(p[3])[1],(p[3])[2],0,0)
+    elif len(p[3]) == 3:
+        p[0] = create_object(p[1], (p[3])[0], (p[3])[1], (p[3])[2], 0, 0)
+    else:
+        p[0] = None
     # else:
     #     p[0] = None
 def p_error(p):
@@ -165,8 +188,20 @@ def p_empty(p):
 
 def create_object(typename, arg1, arg2, arg3, arg4, arg5):
     if typename == 'Board':
-        print('create')
-        return Board.Board(8,8)
+        print('Board Created')
+        return Board.Board(arg1,arg2)
+    elif typename == 'Dice':
+        print('Dice Created')
+        return Dice.Dice(arg1, arg2)
+    elif typename == 'Player':
+        print('Player Created')
+        return Player.Player(arg1, arg2, arg3)
+    elif typename == 'Timer':
+        print('Timer Created')
+        return Timer.Timer(arg1, arg2, arg3)
+    elif typename == 'Piece':
+        print('Piece Created')
+        return Piece.Piece(arg1, arg2, arg3,arg4,arg5)
     else:
         print('else')
         return None
