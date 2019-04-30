@@ -20,8 +20,8 @@ reserved = {
     'board' : 'BOARD',
     'print' : 'PRINT',
     # 'for' : 'FOR',
-    # 'True' : 'TRUE',
-    # 'False' : 'FALSE',
+    'True' : 'TRUE',
+    'False' : 'FALSE',
     'and' : 'AND',
     'or' : 'OR',
     'not' : 'NOT'
@@ -32,7 +32,7 @@ tokens = [
     'INT',
     'FLOAT',
     'STRING',
-    'NAME', # Identifier
+    'ID', # Identifier
     'PLUS',
     'MINUS',
     'DIVIDE',
@@ -50,13 +50,10 @@ tokens = [
     'LESSTHANOREQUALS',
     'GREATERTHANOREQUALS',
     'ISEQUALS',
-    'TRUE',
-    'FALSE'
 
     ] + list(reserved.values())
 
-# Use regular expressions to define what each token is
-# Alternatively : literals = [ '+','-','*','/' ] or  literals = "+-*/"
+# Regex
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_MULTIPLY = r'\*'
@@ -74,8 +71,6 @@ t_LESSTHAN = r'<'
 t_GREATERTHAN = r'>'
 t_LESSTHANOREQUALS = r'\<\='
 t_GREATERTHANOREQUALS = r'\>\='
-t_TRUE = 'True'
-t_FALSE = 'False'
 
 
 # Ply's special t_ignore variable allows us to define characters the lexer will ignore.
@@ -112,10 +107,11 @@ def t_STRING(t): # have to use ""
 # A NAME is a variable name. A variable can be 1 or more characters in length.
 # The first character must be in the ranges a-z A-Z or be an underscore.
 # Any character following the first character can be a-z A-Z 0-9 or an underscore.
-def t_NAME(t):
+def t_ID(p):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = 'NAME'
-    return t
+    if p.value in reserved:
+        p.type = reserved[p.value]
+    return p
 
 # Skip the current token and output 'Illegal characters' using the special Ply t_error function.
 def t_error(t):
@@ -138,12 +134,14 @@ precedence = (
 # Define our grammar. We allow expressions, var_assign's and empty's.
 def p_calc(p):
     '''
-    calc : expression
+    calc : ID
+         | expression
          | var_assign
          | empty
          | string_statement
          | print
          | bool_statement
+         | board
     '''
     # if isinstance(p[1], list):
     #     pass
@@ -151,8 +149,8 @@ def p_calc(p):
 
 def p_var_assign(p):
     '''
-    var_assign : NAME EQUALS expression
-               | NAME EQUALS string_statement
+    var_assign : ID EQUALS expression
+               | ID EQUALS string_statement
                | string_statement
     '''
     # Build our tree
@@ -233,9 +231,9 @@ def p_bool_stament(p):
 #     # elif p[2] == 'and' or p[2] == 'or':
     #     p[0] = (p[2], p[1], p[3])
 
-def p_expression_var(p):
+def p_expression_var(p): # have to check p[1] in run to see the type of the ID
     '''
-    expression : NAME
+    expression : ID
     '''
     p[0] = ('var', p[1])
 
@@ -247,9 +245,9 @@ def p_timer_expression(p):
 
 def p_board(p):
     '''
-    expression : BOARD
+    board : BOARD expression
     '''
-    p[0] = 'board'
+    p[0] = p[2]
 
 def p_dice_expression(p):
     '''
@@ -352,26 +350,27 @@ def run(p):
         return run(p[1]) and run(p[2])
     elif p[0] == 'or':
         return run(p[1]) or run(p[2])
-    elif p[1] == 'board':
-        board = Board.Board(1,2)
-        # b = board.createChessBoard("white", "black")
-        # return board
-        # board.display(b[0], 800, 800, b[1])
-        # return Board(p[1], p[2])
-        # print('hi')
-    elif p[0] == 'timer':
-        return Timer(p[1], p[2], p[3])
-    elif p[0] == 'player':
-        return Player(p[1], p[2], p[3])
-    elif p[0] == 'dice':
-        return Dice(p[1], p[2])
-    elif p[0] == 'print':
-        print(str(p[1]))
-    # elif p[0] == 'var':
-    #     if p[1] not in env:
-    #         return 'Undeclared variable found!'
-    #     else:
-    #         return env[p[1]]
+    # elif p[0] == 'board':
+    #     #board = Board.Board(1,2)
+    #     # b = board.createChessBoard("white", "black")
+    #     # return board
+    #     # board.display(b[0], 800, 800, b[1])
+    #     # return Board(p[1], p[2])
+    #     # print('hi')
+    #     return p
+    # elif p[0] == 'timer':
+    #     return Timer(p[1], p[2], p[3])
+    # elif p[0] == 'player':
+    #     return Player(p[1], p[2], p[3])
+    # elif p[0] == 'dice':
+    #     return Dice(p[1], p[2])
+    # elif p[0] == 'print':
+    #     print(str(p[1]))
+    elif p[0] == 'var':
+        if p[1] not in env:
+            return 'Undeclared variable found!'
+        else:
+            return env[p[1]]
     return p
     # else:
     #     return p
