@@ -15,6 +15,7 @@ reserved = {
     'False' : 'BOOL',
     'and' : 'AND',
     'or' : 'OR',
+    'CountDown' : 'FUNCTION',
 }
 
 tokens = [
@@ -115,6 +116,8 @@ def p_main(p):
          | empty
          | typedeclar
          | listprim
+         | var_assign
+         | var
     '''
     print(run(p[1]))
 
@@ -128,12 +131,12 @@ def p_primitive(p):
     '''
     p[0] = p[1]
 
-def p_arg(p):
-    '''
-    args : LPAREN listprim RPAREN
-         | LPAREN empty RPAREN
-    '''
-    p[0] = p[2]
+# def p_arg(p):
+#     '''
+#     args : LPAREN listprim RPAREN
+#          | LPAREN empty RPAREN
+#     '''
+#     p[0] = p[2]
 
 def p_list_attr(p):
     '''
@@ -175,8 +178,30 @@ def p_typedeclar(p):
         p[0] = create_object(p[1], (p[3])[0], (p[3])[1], (p[3])[2], 0, 0)
     else:
         p[0] = None
-    # else:
-    #     p[0] = None
+
+def p_var_assign(p):
+    '''
+    var_assign : ID EQUALS expression
+               | ID EQUALS prim
+               | ID EQUALS typedeclar
+    '''
+    # Build our tree
+    p[0] = ('=', p[1], p[3])
+
+def p_expression_var(p):
+    '''
+    var : ID SEMI
+    '''
+    global env
+    if p[1] not in env:
+        print('Undeclared variable found!')
+    else:
+        p[0] = env[p[1]]
+    #p[0] = ('var', p[1])
+
+# def fun_call(p):
+
+
 def p_error(p):
     print("Syntax error found!")
 
@@ -212,6 +237,7 @@ def create_object(typename, arg1, arg2, arg3, arg4, arg5):
 env = {}
 
 def run(p):
+    global env
     if type(p) == tuple:
         if p[0] == '+':
             return run(p[1]) + run(p[2])
@@ -225,6 +251,14 @@ def run(p):
             return run(p[1]) and run(p[2])
         elif p[0] == 'or':
             return run(p[1]) or run(p[2])
+        elif p[0] == '=':
+            env[p[1]] = run(p[2])
+            return ''
+        elif p[0] == 'var':
+            if p[1] not in env:
+                return 'Undeclared variable found!'
+            else:
+                return env[p[1]]
     return p
 
 
