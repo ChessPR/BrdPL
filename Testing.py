@@ -66,6 +66,7 @@ class Board(object):
                             thecanvas.create_image(height/(2*self.y), row*height/(2*self.y) + height/self.y, image=im)
                         else:
                             thecanvas.create_image(col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y), image=im)
+                           # thecanvas.create_image(col*width/(2*self.x) + width/self.x, row*height/(2*self.y) + height/self.y, image=im)
                     else:
                         pass
             window.mainloop()
@@ -96,7 +97,7 @@ print(b[1])
 
 a = b[0]
 a[1, 0] = 2
-a[0, 0] = 4
+a[5, 3] = 4
 print(b[0])
 
 # im = PhotoImage(file='chessKing.png')

@@ -1,32 +1,14 @@
+from PIL import Image
+from tkinter import *
 class Piece(object):
 
-    def __init__(self, x, y, image, name, location):
-        if isinstance(x and y, str) and isinstance(image and name, str) and isinstance(location, tuple):
-            self.x = x
-            self.y = y
+    def __init__(self, image, name, location):
+        if isinstance(image and name, str) and isinstance(location, tuple):
             self.image = image
             self.name = name
             self.location = location
         else:
             raise TypeError("One or more arguments dont macth type.\n X & Y must be int, image and name must be str and location must be a tuple")
-
-    def getX(self):
-        return self.x
-
-    def setX(self, value):
-        if isinstance(value, int):
-            self.x = value
-        else:
-            raise TypeError("value must be a int")
-
-    def getY(self):
-        return self.y
-
-    def setY(self, value):
-        if isinstance(value, int):
-            self.y = value
-        else:
-            raise TypeError("value must be a int")
 
     def getImage(self):
         return self.image
@@ -54,3 +36,4 @@ class Piece(object):
             self.location = newLocation
         else:
             raise TypeError("Location must be a tuple")
+
