@@ -1,4 +1,4 @@
-# BrdPL - Board Games Programming Language
+# BrdPL - Board Games Programming Language (ICOM4036)
 Developers:
 
 Jean Paul Rivera
@@ -58,7 +58,7 @@ Timer(boolean)
 - adds time to the game
 - For details: [Timer.py](Timer.py)
 
-Rule
+Rule --- falta
 
 
 #Tutorial and Demo
@@ -66,4 +66,21 @@ In the next video there will be a short demonstration video and a breif tutorial
 of how to use the BrdPL Programming language.
 
 [![Watch the video]()](https://youtu.be/T-D1KVIuvjA)
+
+# Implementation Description
+The rules of the grammar and syntax of the BrdPL are written in Python. We also used the
+PLY library as our lexical analyzer for the project grammar and for it to be readable by
+the computer. This will enable the execution of code written in the BrdPL language. Finally,
+the development of the project is aided by the use of GitHub to keep track of versions
+and updates as well as serving as a place where others could access this finished product.
+
+--- Add more
+
+# Conclusion
+As seen in the demo, the BrdPL Programming Language completed its task in developing board
+games quickly and easily. This language reduce the amount of time required to develop a board
+game. It also provides a breif knowledge in programming and does not limit the developer in
+any way making it accessible for any adjustments. In our opinion, this project overpassed our
+expectations since we had no idea of how to create a programming language. Lastly, we are
+really excited with how the project ended and hope you enjoy it as well.
 
