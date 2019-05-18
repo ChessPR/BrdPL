@@ -66,7 +66,8 @@ Requirements:
 1. Python 3.X
 2. A text editor of you liking
 3. Install the necesary import for the program(some imports don't work well on ubuntu, so windows is recomended)
-4. After you download and extract, run the main class.
+4. After you download and extract, run the main class: BrdPLLexer
+
 In the next video there will be a short demonstration video and a breif tutorial 
 of how to use the BrdPL Programming language.
 
@@ -78,8 +79,8 @@ PLY library as our lexical analyzer for the project grammar and for it to be rea
 the computer. This will enable the execution of code written in the BrdPL language. Finally,
 the development of the project is aided by the use of GitHub to keep track of versions
 and updates as well as serving as a place where others could access this finished product.
-
---- Add more
+The language support dynamic typing, meaning that you don't need to initialize the data type.
+Uses semicolon, so missing them will result in a syntax error.
 
 # Conclusion
 As seen in the demo, the BrdPL Programming Language completed its task in developing board
