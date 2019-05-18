@@ -17,6 +17,7 @@ reserved = {
     'or' : 'OR',
     'CountDown' : 'FUNCTION',
     'Display' : 'DISPLAY',
+    'DiceRollGame' : 'DICEROLLGAME',
 }
 
 tokens = [
@@ -117,6 +118,7 @@ def p_main(p):
          | var_assign
          | var
          | display
+         | diceRollGame
     '''
     print(run(p[1]))
 
@@ -158,10 +160,11 @@ def p_expression_prim(p):
 
 def p_typedeclar(p):
     '''
-    typedeclar : TYPENAME LPAREN empty RPAREN SEMI
-               | TYPENAME LPAREN listprim RPAREN SEMI
+    typedeclar : TYPENAME LPAREN empty RPAREN
+               | TYPENAME LPAREN listprim RPAREN
     '''
-    print('typedeclar')
+    # | TYPENAME LPAREN empty RPAREN SEMI
+    # | TYPENAME LPAREN listprim RPAREN SEMI
     if len(p[3]) == 2:
         p[0] = create_object(p[1],(p[3])[0],(p[3])[1],0,0,0)
     elif len(p[3]) == 3:
@@ -203,6 +206,24 @@ def p_expression_var(p):
     var : ID
     '''
     p[0] = ('var', p[1])
+
+def p_diceGame(p):
+    '''
+    diceRollGame : DICEROLLGAME SEMI
+    '''
+    dice = Dice.Dice(2,6)
+    print('Roll Dice Game')
+    print('')
+    player1 = sum(dice.roll())
+    player2 = sum(dice.roll())
+    print(('Player 1 score: %d   Player 2 score: %d') % (player1,player2))
+    if player1 > player2:
+        print('Player 1 Won!!!')
+    elif player1 < player2:
+        print('Player 2 Won!!!')
+    else:
+        print('Is a Tie!!!')
+    p[0] = ''
 
 def p_error(p):
     print("Syntax error found!")
