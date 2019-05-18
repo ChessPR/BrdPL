@@ -1,7 +1,7 @@
 # BrdPL - Board Games Programming Language (ICOM4036)
 Developers:
 
-Jean Paul Rivera
+Jean Paul Lugo
 
 Roberto D. De Jesus
 
