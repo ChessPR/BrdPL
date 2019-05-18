@@ -61,7 +61,7 @@ Timer(boolean)
 Rule --- falta
 
 
-#Tutorial and Demo
+# Tutorial and Demonstration
 Requirements:
 1. Python 3.X
 2. A text editor of you liking
@@ -86,7 +86,8 @@ Uses semicolon, so missing them will result in a syntax error.
 As seen in the demo, the BrdPL Programming Language completed its task in developing board
 games quickly and easily. This language reduce the amount of time required to develop a board
 game. It also provides a breif knowledge in programming and does not limit the developer in
-any way making it accessible for any adjustments. In our opinion, this project overpassed our
-expectations since we had no idea of how to create a programming language. Lastly, we are
-really excited with how the project ended and hope you enjoy it as well.
+any way making it accessible for any adjustments. Some of the future work that can be added is 
+a rules and movement library implementation to make it even simpler. In our opinion, this project
+overpassed our expectations since we had no idea of how to create a programming language. Lastly, 
+we are really excited with how the project ended and hope you enjoy it as well.
 
