@@ -73,7 +73,7 @@ Requirements:
 In the next video there will be a short demonstration video and a breif tutorial 
 of how to use the BrdPL Programming language.
 
-[![Watch the video]()](https://youtu.be/T-D1KVIuvjA)
+[![Watch the video]()](https://youtu.be/ihAYCkrt81Q)
 
 # Implementation Description
 The rules of the grammar and syntax of the BrdPL are written in Python. We also used the
