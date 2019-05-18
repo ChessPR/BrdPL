@@ -11,9 +11,9 @@ class Dice(object):
         arr = []
         for i in range (self.number_of_dices):
             arr.append(r.randint(1, self.sides))
-        print(arr)
+        return arr
 
 
 # For testing purposes
-# dice = Dice(1, 6)
+# dice = Dice(2, 6)
 # dice.roll()

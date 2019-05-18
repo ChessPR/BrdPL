@@ -1,5 +1,3 @@
-from PIL import Image
-from tkinter import *
 class Piece(object):
 
     def __init__(self, image, name, location):
