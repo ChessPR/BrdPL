@@ -160,10 +160,11 @@ def p_expression_prim(p):
 
 def p_typedeclar(p):
     '''
-    typedeclar : TYPENAME LPAREN empty RPAREN SEMI
-               | TYPENAME LPAREN listprim RPAREN SEMI
+    typedeclar : TYPENAME LPAREN empty RPAREN
+               | TYPENAME LPAREN listprim RPAREN
     '''
-    print('typedeclar')
+    # | TYPENAME LPAREN empty RPAREN SEMI
+    # | TYPENAME LPAREN listprim RPAREN SEMI
     if len(p[3]) == 2:
         p[0] = create_object(p[1],(p[3])[0],(p[3])[1],0,0,0)
     elif len(p[3]) == 3:
