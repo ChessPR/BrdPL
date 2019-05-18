@@ -61,7 +61,7 @@ Timer(boolean)
 Rule --- falta
 
 
-#Tutorial and Demo
+# Tutorial and Demonstration
 Requirements:
 1. Python 3.X
 2. A text editor of you liking
