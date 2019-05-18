@@ -92,39 +92,37 @@ class Board(object):
             raise TypeError("One or more arguments have the wrong type")
 
 
-def createImage(image, x, y):
-
-
+# def createImage(image, x, y):
 
 def createCanvas(window, width, height):
     return Canvas(Canvas(window, width=width, height=height))
 
 
 # For testing purposes
-board = Board(8, 8)
-pieceArr = ['black.png', 'red.png', 'blackQueen.png', 'redQueen.png']
-b = board.createChessBoard("white", "black", pieceArr)
-# print(type(b))
-# print(b[0, 1])
-# print(b[0, 2])
-# board.display(b, 750, 750, "#F8F8FF", "#A0522D")
-# print(type(b[0]))
-# print(type(b[1]))
-if isinstance(b[0], np.ndarray):
-    print("Its ok")
-print(b[0])
-print(b[1])
-
-a = b[0]
-a[1, 0] = 2
-a[0, 0] = 4
-print(b[0])
-
-# im = PhotoImage(file='chessKing.png')
-board.display(b[0], 800, 800, b[1], b[2])
-
-
-
+# board = Board(8, 8)
+# pieceArr = ['black.png', 'red.png', 'blackQueen.png', 'redQueen.png']
+# b = board.createChessBoard("white", "black", pieceArr)
+# # print(type(b))
+# # print(b[0, 1])
+# # print(b[0, 2])
+# # board.display(b, 750, 750, "#F8F8FF", "#A0522D")
+# # print(type(b[0]))
+# # print(type(b[1]))
+# if isinstance(b[0], np.ndarray):
+#     print("Its ok")
+# print(b[0])
+# print(b[1])
+#
+# a = b[0]
+# a[1, 0] = 2
+# a[0, 0] = 4
+# print(b[0])
+#
+# # im = PhotoImage(file='chessKing.png')
+# board.display(b[0], 800, 800, b[1], b[2])
+#
+#
+#
 
 
 
