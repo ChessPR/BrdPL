@@ -62,6 +62,11 @@ Rule --- falta
 
 
 #Tutorial and Demo
+Requirements:
+1. Python 3.X
+2. A text editor of you liking
+3. Install the necesary import for the program(some imports don't work well on ubuntu, so windows is recomended)
+4. After you download and extract, run the main class.
 In the next video there will be a short demonstration video and a breif tutorial 
 of how to use the BrdPL Programming language.
 
