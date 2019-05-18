@@ -11,7 +11,8 @@ Francisco M. Valentin
 The BrdPL programming language provides the programmer the tools necessary to start
 creating any type of board game. If you need to create a board, some pieces to make 
 the game fun or just throwing a dice, this language can simplify your life by just 
-writing few lines of code. 
+writing few lines of code. The language uses numpy and Tkinter libraries to achieve 
+most of its features. 
 
 The idea of creating a board game Programming Language came since one of our teammates 
 is a great chess player and the other two love to play others (not classic much classic) 
@@ -34,8 +35,9 @@ can be made quickly are checkers, tic-tac-toe, rolling dice, connect 4 and other
 talk about some language features, a tutorial of how to use it, and explain the code. 
 
 # Language Features
-Board( # rows, # columns, set color1, set color2) 
-- specify the size of the board by the numbers of rows and columns 
+Board( # rows, # columns, window) 
+- specify the size of the board by the numbers of rows and columns
+- window corresponds to a tkinter object
 - you can set the board colors for example black and red for charckers.
 - For details: [Board.py](Board.py)
 
@@ -44,22 +46,22 @@ Piece(image, name)
 - the movement is implemented seperately to preven limitations
 - For details: [Piece.py](Piece.py)
 
-Dice(Number)
-- add the dice roll to the board game and specify the number of faces
-- the range is from 1 to Number inclusive
+Dice(Number, Sides)
+- Number -> how many dices to roll
+- Sides -> number of sides on each dice
+- the range is from 1 to Sides inclusive
 - For details: [Dice.py](Dice.py)
 
-Player( # of players)
-- specify the maximum number of players
-- each player will be have a unique identity from 1 to 4
+Player(name, turn, score, num)
+- name -> Name of the player
+- turn -> boolean representig the state of turn of the player
+- score -> Score of the player (int or float)
+- num -> number of the player. Ex if there are 3 players one player is 1 the other 2 and the last one 3
 - For details: [Player.py](Player.py)
 
 Timer(boolean)
 - adds time to the game
 - For details: [Timer.py](Timer.py)
-
-Rule --- falta
-
 
 # Tutorial and Demonstration
 Requirements:
