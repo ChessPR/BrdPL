@@ -1,15 +1,16 @@
 import numpy as np
 from tkinter import *
-from PIL import Image
+from PIL import ImageTk , Image
 import Piece
 
 
 class Board(object):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, window):
         if isinstance(x and y, int):
             self.x = x
             self.y = y
+            self.window = window
         else:
             raise TypeError("You must enter two integers specifying the dimensions of the 2d board")
 
@@ -34,54 +35,22 @@ class Board(object):
         return [gameboard, colorArr, pieceArr]
 
     def display(self,  arr, width, height, color_Arr, piece_Arr):
-        count = 0
         if isinstance(color_Arr, list) and isinstance(width and height, int) and isinstance(arr, np.ndarray):
-            window = Tk()
-            thecanvas = Canvas(window, width=width, height=height)
-            thecanvas.grid(row=0, column=0, columnspan=2)
-            window.update_idletasks()
-            w = width / self.x
-            h = height / self.y
-            # Color game board
+            self.window.geometry(str(width) + "x" + str(height))
             for row in range(self.x):
                 for col in range(self.y):
-                        if count % 9 == 8:
-                            count = count + 1
-                        fillcolor = color_Arr[count % 2]
-                        count = count + 1
-                        thecanvas.create_rectangle(col*w, row*h, (col+1)*w, (row+1)*h, fill=fillcolor)
-            # Put images
-            for row in range(self.x):
-                for col in range(self.y):
-                    if arr[row, col] != 0 and arr[row, col] != 1:
-                        print(a[row, col])
-                        im = int(arr[row, col])
-                        im = piece_Arr[im - 2]
-                        im = createImage(im)
-                        if row == 0 and col == 0:
-                            thecanvas.create_image(width/(2*self.x), height/(2*self.y), image=im)
-                        elif row == 0:
-                            thecanvas.create_image(col*width/(2*self.x) + width/self.x, height/self.x, image=im)
-                        elif col == 0:
-                            thecanvas.create_image(height/(2*self.y), row*height/(2*self.y) + height/self.y, image=im)
-                        else:
-                            thecanvas.create_image(col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y), image=im)
-                           # thecanvas.create_image(col*width/(2*self.x) + width/self.x, row*height/(2*self.y) + height/self.y, image=im)
-                    else:
-                        pass
-            window.mainloop()
+                        im = piece_Arr[int(arr[row, col]) - 2]
+                        photo = PhotoImage(file=im)
+                        label = Label(image=photo)
+                        label.place(x=col*width/self.x, y=row*height/self.y)
+            self.window.mainloop()
         else:
             raise TypeError("One or more arguments have the wrong type")
 
 
-def createImage(image):
-    return PhotoImage(file=image)
-
-
-
-
 # For testing purposes
-board = Board(8, 8)
+
+board = Board(8, 8, window=Tk())
 pieceArr = ['black.png', 'red.png', 'blackQueen.png', 'redQueen.png']
 b = board.createChessBoard("white", "black", pieceArr)
 # print(type(b))
@@ -92,12 +61,13 @@ b = board.createChessBoard("white", "black", pieceArr)
 # print(type(b[1]))
 if isinstance(b[0], np.ndarray):
     print("Its ok")
-print(b[0])
-print(b[1])
 
-a = b[0]
-a[1, 0] = 2
-a[5, 3] = 4
+b[0][4][0] = 3
+b[0][0][0] = 3
+# a[0, 7] = 4
+# a[0, 2] = 2
+# a[5, 0] = 2
+# a[7, 7] = 4
 print(b[0])
 
 # im = PhotoImage(file='chessKing.png')

@@ -49,34 +49,55 @@ class Board(object):
                             count = count + 1
                         fillcolor = color_Arr[count % 2]
                         count = count + 1
-                        thecanvas.create_rectangle(col*w, row*h, (col+1)*w, (row+1)*h, fill=fillcolor)
-            # Put images
-            for row in range(self.x):
-                for col in range(self.y):
-                    if arr[row, col] != 0 and arr[row, col] != 1:
-                        print(a[row, col])
-                        im = int(arr[row, col])
-                        im = piece_Arr[im - 2]
-                        im = createImage(im)
-                        if row == 0 and col == 0:
-                            thecanvas.create_image(width/(2*self.x), height/(2*self.y), image=im)
-                        elif row == 0:
-                            thecanvas.create_image(col*width/(2*self.x) + width/self.x, height/self.x, image=im)
-                        elif col == 0:
-                            thecanvas.create_image(height/(2*self.y), row*height/(2*self.y) + height/self.y, image=im)
+                        if arr[row, col] != 0 and arr[row, col] != 1:
+                            print(a[row, col])
+                            im = int(arr[row, col])
+                            im = piece_Arr[im - 2]
+                            im = createImage(im)
+                            if row == 0 and col == 0:
+                                createImage(im, width/(2*self.x), height/(2*self.y))
+                                # thecanvas.create_image(width/(2*self.x), height/(2*self.y), image=im)
+                            elif row == 0:
+                                createImage(im, col*width/(2*self.x) + width/self.x, height/self.x)
+                                # thecanvas.create_image(col*width/(2*self.x) + width/self.x, height/self.x, image=im)
+                            elif col == 0:
+                                createImage(im, height/(2*self.y), row*height/(2*self.y) + height/self.y)
+                                # thecanvas.create_image(height/(2*self.y), row*height/(2*self.y) + height/self.y, image=im)
+                            else:
+                                createImage(im, col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y))
+                                # thecanvas.create_image(col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y), image=im)
                         else:
-                            thecanvas.create_image(col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y), image=im)
-                    else:
-                        pass
+                            thecanvas.create_rectangle(col*w, row*h, (col+1)*w, (row+1)*h, fill=fillcolor)
+            #
+            # # Put images
+            # for row in range(self.x):
+            #     for col in range(self.y):
+            #         if arr[row, col] != 0 and arr[row, col] != 1:
+            #             print(a[row, col])
+            #             im = int(arr[row, col])
+            #             im = piece_Arr[im - 2]
+            #             im = createImage(im)
+            #             if row == 0 and col == 0:
+            #                 thecanvas.create_image(width/(2*self.x), height/(2*self.y), image=im)
+            #             elif row == 0:
+            #                 thecanvas.create_image(col*width/(2*self.x) + width/self.x, height/self.x, image=im)
+            #             elif col == 0:
+            #                 thecanvas.create_image(height/(2*self.y), row*height/(2*self.y) + height/self.y, image=im)
+            #             else:
+            #                 thecanvas.create_image(col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y), image=im)
+            #         else:
+            #             pass
             window.mainloop()
         else:
             raise TypeError("One or more arguments have the wrong type")
 
 
-def createImage(image):
-    return PhotoImage(file=image)
+def createImage(image, x, y):
 
 
+
+def createCanvas(window, width, height):
+    return Canvas(Canvas(window, width=width, height=height))
 
 
 # For testing purposes
