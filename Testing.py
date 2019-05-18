@@ -1,7 +1,7 @@
 import numpy as np
 from tkinter import *
 from PIL import ImageTk , Image
-import Piece
+from Piece import *
 
 
 class Board(object):
@@ -22,6 +22,22 @@ class Board(object):
         else:
             raise TypeError("Color must be a string")
 
+    def createCheckerStart(self, color1, color2, pieceArr):
+        gameboard = np.zeros((self.x, self.y))
+        gameboard[1::2, 0::2] = 1
+        gameboard[0::2, 1::2] = 1
+        for row in range(8):
+            for col in range(3):
+                if gameboard[row, col] == 1:
+                    gameboard[row, col] = 2
+
+        for row in range(8):
+            for col in range(3):
+                if gameboard[row, col+5] == 1:
+                    gameboard[row, col+5] = 3
+        colorArr = [color1, color2]
+        return [gameboard, colorArr, pieceArr]
+
     def createChessBoard(self, color1, color2, pieceArr):
         for p in pieceArr:
             if isinstance(p and color1 and color2, str):
@@ -37,12 +53,19 @@ class Board(object):
     def display(self,  arr, width, height, color_Arr, piece_Arr):
         if isinstance(color_Arr, list) and isinstance(width and height, int) and isinstance(arr, np.ndarray):
             self.window.geometry(str(width) + "x" + str(height))
+            x = int(width/self.x)
+            y = int(height/self.y)
             for row in range(self.x):
                 for col in range(self.y):
-                        im = piece_Arr[int(arr[row, col]) - 2]
-                        photo = PhotoImage(file=im)
-                        label = Label(image=photo)
-                        label.place(x=col*width/self.x, y=row*height/self.y)
+                    if int(arr[row, col]) == 0:
+                        label = Label(bg=color_Arr[0], width=x, height=y)
+                        label.place(x=row*x, y=col*y)
+                    elif int(arr[row, col]) == 1:
+                        label = Label(bg=color_Arr[1], width=x, height=y)
+                        label.place(x=row*x, y=col*y)
+                    else:
+                        label = Label(image=piece_Arr[int(arr[row, col] - 2)])
+                        label.place(x=row*x, y=col*y)
             self.window.mainloop()
         else:
             raise TypeError("One or more arguments have the wrong type")
@@ -50,41 +73,26 @@ class Board(object):
 
 # For testing purposes
 
+# board = Board(8, 8, window=Tk())
 board = Board(8, 8, window=Tk())
-pieceArr = ['black.png', 'red.png', 'blackQueen.png', 'redQueen.png']
-b = board.createChessBoard("white", "black", pieceArr)
+red = Piece('red.png', 'red Piece').createImage()
+black = Piece('black.png', 'black Piece').createImage()
+redQueen = Piece('redQueen.png', 'red Queen').createImage()
+blackQueen = Piece('blackQueen.png', 'black Queen').createImage()
+
+# pieceArr = [red, black, redQueen, blackQueen]
+#
+# b = board.createChessBoard("white", "black", pieceArr)
+#
+# board.display(b[0], 800, 800, b[1], b[2])
+
 # print(type(b))
 # print(b[0, 1])
 # print(b[0, 2])
 # board.display(b, 750, 750, "#F8F8FF", "#A0522D")
 # print(type(b[0]))
 # print(type(b[1]))
-if isinstance(b[0], np.ndarray):
-    print("Its ok")
 
-b[0][4][0] = 3
-b[0][0][0] = 3
-# a[0, 7] = 4
-# a[0, 2] = 2
-# a[5, 0] = 2
-# a[7, 7] = 4
-print(b[0])
-
-# im = PhotoImage(file='chessKing.png')
+pieceArr = [red, black, redQueen, blackQueen]
+b = board.createCheckerStart('white', 'black', pieceArr)
 board.display(b[0], 800, 800, b[1], b[2])
-
-
-
-
-
-
-
-
-
-            #
-            # for pieces in ArrPieces:
-            #     img = Image.open(pieces.image).resize((pieces.x, pieces.y), Image.ANTIALIAS)
-            #     picture = ImageTk.PhotoImage(img)
-            #     pic = Label(thecanvas, image=picture)
-            #     pic.place(x=pieces.location[0], y=pieces.location[1])
-            #     labelArr.append(pic)

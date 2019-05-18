@@ -1,10 +1,11 @@
 class Player(object):
 
-    def __init__(self, name, turn, score):
-        if isinstance(name, str) and isinstance(turn, bool) and isinstance(score, int or float):
+    def __init__(self, name, turn, score, numOfPlayer):
+        if isinstance(name, str) and isinstance(turn, bool) and isinstance(score and numOfPlayer, int or float):
             self.name = name
             self.turn = turn
             self.score = score
+            self.numOfPlayer = numOfPlayer
         else:
             raise TypeError("One or more arguments don't match the corresponding type")
 
@@ -34,3 +35,6 @@ class Player(object):
 
     def _print(self):
         print("Name: " + self.name + " Turn: " + str(self.turn) + " Score: " + str(self.score))
+
+    def changeNumOfPlayer(self, num):
+        self.numOfPlayer = num

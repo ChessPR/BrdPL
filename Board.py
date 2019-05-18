@@ -1,15 +1,16 @@
 import numpy as np
 from tkinter import *
-from PIL import Image
-import Piece
+from PIL import ImageTk , Image
+from Piece import *
 
 
 class Board(object):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, window):
         if isinstance(x and y, int):
             self.x = x
             self.y = y
+            self.window = window
         else:
             raise TypeError("You must enter two integers specifying the dimensions of the 2d board")
 
@@ -20,6 +21,22 @@ class Board(object):
             return [gameboard, color_Arr]
         else:
             raise TypeError("Color must be a string")
+
+    def createCheckerStart(self, color1, color2, pieceArr):
+        gameboard = np.zeros((self.x, self.y))
+        gameboard[1::2, 0::2] = 1
+        gameboard[0::2, 1::2] = 1
+        for row in range(8):
+            for col in range(3):
+                if gameboard[row, col] == 1:
+                    gameboard[row, col] = 2
+
+        for row in range(8):
+            for col in range(3):
+                if gameboard[row, col+5] == 1:
+                    gameboard[row, col+5] = 3
+        colorArr = [color1, color2]
+        return [gameboard, colorArr, pieceArr]
 
     def createChessBoard(self, color1, color2, pieceArr):
         for p in pieceArr:
@@ -34,107 +51,50 @@ class Board(object):
         return [gameboard, colorArr, pieceArr]
 
     def display(self,  arr, width, height, color_Arr, piece_Arr):
-        count = 0
         if isinstance(color_Arr, list) and isinstance(width and height, int) and isinstance(arr, np.ndarray):
-            window = Tk()
-            thecanvas = Canvas(window, width=width, height=height)
-            thecanvas.grid(row=0, column=0, columnspan=2)
-            window.update_idletasks()
-            w = width / self.x
-            h = height / self.y
-            # Color game board
+            self.window.geometry(str(width) + "x" + str(height))
+            x = int(width/self.x)
+            y = int(height/self.y)
             for row in range(self.x):
                 for col in range(self.y):
-                        if count % 9 == 8:
-                            count = count + 1
-                        fillcolor = color_Arr[count % 2]
-                        count = count + 1
-                        if arr[row, col] != 0 and arr[row, col] != 1:
-                            print(a[row, col])
-                            im = int(arr[row, col])
-                            im = piece_Arr[im - 2]
-                            im = createImage(im)
-                            if row == 0 and col == 0:
-                                createImage(im, width/(2*self.x), height/(2*self.y))
-                                # thecanvas.create_image(width/(2*self.x), height/(2*self.y), image=im)
-                            elif row == 0:
-                                createImage(im, col*width/(2*self.x) + width/self.x, height/self.x)
-                                # thecanvas.create_image(col*width/(2*self.x) + width/self.x, height/self.x, image=im)
-                            elif col == 0:
-                                createImage(im, height/(2*self.y), row*height/(2*self.y) + height/self.y)
-                                # thecanvas.create_image(height/(2*self.y), row*height/(2*self.y) + height/self.y, image=im)
-                            else:
-                                createImage(im, col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y))
-                                # thecanvas.create_image(col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y), image=im)
-                        else:
-                            thecanvas.create_rectangle(col*w, row*h, (col+1)*w, (row+1)*h, fill=fillcolor)
-            #
-            # # Put images
-            # for row in range(self.x):
-            #     for col in range(self.y):
-            #         if arr[row, col] != 0 and arr[row, col] != 1:
-            #             print(a[row, col])
-            #             im = int(arr[row, col])
-            #             im = piece_Arr[im - 2]
-            #             im = createImage(im)
-            #             if row == 0 and col == 0:
-            #                 thecanvas.create_image(width/(2*self.x), height/(2*self.y), image=im)
-            #             elif row == 0:
-            #                 thecanvas.create_image(col*width/(2*self.x) + width/self.x, height/self.x, image=im)
-            #             elif col == 0:
-            #                 thecanvas.create_image(height/(2*self.y), row*height/(2*self.y) + height/self.y, image=im)
-            #             else:
-            #                 thecanvas.create_image(col*width/self.x + width/(2*self.x), row*height/self.y + height/(2*self.y), image=im)
-            #         else:
-            #             pass
-            window.mainloop()
+                    if int(arr[row, col]) == 0:
+                        label = Label(bg=color_Arr[0], width=x, height=y)
+                        label.place(x=row*x, y=col*y)
+                    elif int(arr[row, col]) == 1:
+                        label = Label(bg=color_Arr[1], width=x, height=y)
+                        label.place(x=row*x, y=col*y)
+                    else:
+                        label = Label(image=piece_Arr[int(arr[row, col] - 2)])
+                        label.place(x=row*x, y=col*y)
+            self.window.mainloop()
         else:
             raise TypeError("One or more arguments have the wrong type")
 
-
-def createImage(image, x, y):
-
-
-
-def createCanvas(window, width, height):
-    return Canvas(Canvas(window, width=width, height=height))
-
+    def getWindow(self):
+        return self.window
 
 # For testing purposes
-board = Board(8, 8)
-pieceArr = ['black.png', 'red.png', 'blackQueen.png', 'redQueen.png']
-b = board.createChessBoard("white", "black", pieceArr)
-# print(type(b))
-# print(b[0, 1])
-# print(b[0, 2])
-# board.display(b, 750, 750, "#F8F8FF", "#A0522D")
-# print(type(b[0]))
-# print(type(b[1]))
-if isinstance(b[0], np.ndarray):
-    print("Its ok")
-print(b[0])
-print(b[1])
-
-a = b[0]
-a[1, 0] = 2
-a[0, 0] = 4
-print(b[0])
-
-# im = PhotoImage(file='chessKing.png')
-board.display(b[0], 800, 800, b[1], b[2])
-
-
-
-
-
-
-
-
-
-            #
-            # for pieces in ArrPieces:
-            #     img = Image.open(pieces.image).resize((pieces.x, pieces.y), Image.ANTIALIAS)
-            #     picture = ImageTk.PhotoImage(img)
-            #     pic = Label(thecanvas, image=picture)
-            #     pic.place(x=pieces.location[0], y=pieces.location[1])
-            #     labelArr.append(pic)
+#
+# # board = Board(8, 8, window=Tk())
+# board = Board(8, 8, window=Tk())
+# red = Piece('red.png', 'red Piece').createImage()
+# black = Piece('black.png', 'black Piece').createImage()
+# redQueen = Piece('redQueen.png', 'red Queen').createImage()
+# blackQueen = Piece('blackQueen.png', 'black Queen').createImage()
+#
+# # pieceArr = [red, black, redQueen, blackQueen]
+# #
+# # b = board.createChessBoard("white", "black", pieceArr)
+# #
+# # board.display(b[0], 800, 800, b[1], b[2])
+#
+# # print(type(b))
+# # print(b[0, 1])
+# # print(b[0, 2])
+# # board.display(b, 750, 750, "#F8F8FF", "#A0522D")
+# # print(type(b[0]))
+# # print(type(b[1]))
+#
+# pieceArr = [red, black, redQueen, blackQueen]
+# b = board.createCheckerStart('white', 'black', pieceArr)
+# board.display(b[0], 800, 800, b[1], b[2])
