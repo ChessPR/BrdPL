@@ -1,1 +1,52 @@
-<mxfile host="app.diagrams.net" modified="2021-05-15T13:53:27.472Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" version="14.6.13" etag="wFdlpQOCxyrhVOLwBJPc" type="github"><diagram id="Y0O-bItNvgqAExpBPatc">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-05-15T14:25:17.743Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="iK5DrASQCzC3LVS8WFcD" version="14.6.13" type="github">
+  <diagram id="Y0O-bItNvgqAExpBPatc" name="Page-1">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-2" value="System Boundary" style="swimlane;startSize=23;" vertex="1" parent="1">
+          <mxGeometry x="270" y="90" width="440" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-5" value="Create Index Card" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="60" y="330" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-6" value="Move Sticky Note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="60" y="230" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-7" value="Move Index Card" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="60" y="540" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-3" value="Create Sticky Note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="60" y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-8" value="Modify Sticky Note" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="60" y="130" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-9" value="Modify Index Card" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="60" y="430" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-10" value="View Whiteboard" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="250" y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-11" value="Monitor Tasks" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="260" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-12" value="Add Comments to Tasks" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="260" y="230" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-13" value="Claim Task" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="260" y="320" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-14" value="Work on Several projects" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="260" y="430" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-15" value="Assign Projects" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="250" y="530" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tpvCd9_iEOJg17R_yb8O-16" value="Monitor Project" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tpvCd9_iEOJg17R_yb8O-2">
+          <mxGeometry x="250" y="650" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
