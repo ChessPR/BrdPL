@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-15T20:18:50.008Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="uRnZMvafDzPoOOelkPlD" version="14.6.13" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-15T20:20:49.399Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="K2OrCaOXTjH0HpNwxh8v" version="14.6.13" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
     <mxGraphModel dx="981" dy="486" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
@@ -7,13 +7,13 @@
         <mxCell id="OpBFA18Ic4V4CZMrF-h3-1" value="Projects" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
           <mxGeometry x="260" y="560" width="160" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="OpBFA18Ic4V4CZMrF-h3-2" value="+Attribute1&#xa;+Attribute2&#xa;+Attribute3" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="OpBFA18Ic4V4CZMrF-h3-1">
+        <mxCell id="OpBFA18Ic4V4CZMrF-h3-2" value="+ID&#xa;+Whiteboard_id&#xa;+TaskList_id" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="OpBFA18Ic4V4CZMrF-h3-1">
           <mxGeometry y="30" width="160" height="90" as="geometry" />
         </mxCell>
         <mxCell id="OpBFA18Ic4V4CZMrF-h3-3" value="Whiteboard" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
           <mxGeometry x="260" y="710" width="160" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="OpBFA18Ic4V4CZMrF-h3-4" value="+TasksList_id&#xa;+Attribute2&#xa;+Attribute3" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="OpBFA18Ic4V4CZMrF-h3-3">
+        <mxCell id="OpBFA18Ic4V4CZMrF-h3-4" value="+Attribute2&#xa;+Attribute3" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="OpBFA18Ic4V4CZMrF-h3-3">
           <mxGeometry y="30" width="160" height="90" as="geometry" />
         </mxCell>
         <mxCell id="OpBFA18Ic4V4CZMrF-h3-5" value="StickyNotes" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
